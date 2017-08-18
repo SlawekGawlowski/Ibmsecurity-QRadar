@@ -83,18 +83,18 @@ u = QRadarUser(username="admin", password="Object00")
 qradar_server = QRadarAppliance(hostname="192.168.42.100", user=u, lmi_port=443)
 
 # Retrieve the details of all hosts in the deployment
-server_details = ibmsecurity.qradar.servers.get(qradarAppliance=qradar_server)
-print("----------servers.get----------")
+server_details = ibmsecurity.qradar.servers.get_all(qradarAppliance=qradar_server)
+print("----------servers.get_all----------")
 p(server_details)
 
-#print("----------servers.compare----------")
-#p(ibmsecurity.qradar.servers.compare(qradar_server, qradar_server))
+# print("----------servers.compare----------")
+# p(ibmsecurity.qradar.servers.compare(qradar_server, qradar_server))
 
 serverID = server_details['data'][0]['server_id']
 
 # Check ethernet interfaces on the first host in the deployment
-print("----------ethernet.get----------")
-p(ibmsecurity.qradar.ethernet.get(qradarAppliance=qradar_server, server_ID=serverID))
+print("----------ethernet.get_all----------")
+p(ibmsecurity.qradar.ethernet.get_all(qradarAppliance=qradar_server, server_ID=serverID))
 
 # Update an ethernet interfaces on the first host in the deployment
 print("----------ethernet.set----------")
@@ -108,30 +108,30 @@ p(ibmsecurity.qradar.ethernet.set(qradarAppliance=qradar_server,
                                   is_auto_ip=False,
                                   is_moving_config_with_active_ha=True))
 
-print("----------ethernet.get----------")
-p(ibmsecurity.qradar.ethernet.get(qradarAppliance=qradar_server, server_ID=serverID))
+print("----------ethernet.get_all----------")
+p(ibmsecurity.qradar.ethernet.get_all(qradarAppliance=qradar_server, server_ID=serverID))
 
 # print("----------ethernet.compare----------")
 # p(ibmsecurity.qradar.ethernet.compare(qradar_server, serverID, qradar_server, serverID))
-
+#
 # # Check firewall rules on the first host in the deployment
 # print("----------firewall_rules.get----------")
 # p(ibmsecurity.qradar.firewall_rules.get(qradarAppliance=qradar_server, server_ID=serverID))
-#
+# #
 # # Add a firewall rule to the console appliance
 # print("----------firewall_rules.set----------")
 # p(ibmsecurity.qradar.firewall_rules.set(qradarAppliance=qradar_server,
-#                                         server_ID=serverID,
-#                                         is_any_source_ip=False,
-#                                         port_range="",
-#                                         port_type="SINGLE",
-#                                         protocol="ANY",
-#                                         single_port="22",
-#                                         source_ip ="192.168.42.105",
-#                                         check_mode=False,
-#                                         force=False))
+#                                     server_ID=serverID,
+#                                     is_any_source_ip=False,
+#                                     port_range="",
+#                                     port_type="SINGLE",
+#                                     protocol="ANY",
+#                                     single_port="22",
+#                                     source_ip ="192.168.42.105",
+#                                     check_mode=False,
+#                                     force=False))
 # print("----------firewall_rules.get----------")
 # p(ibmsecurity.qradar.firewall_rules.get(qradarAppliance=qradar_server, server_ID=serverID))
-
+#
 # print("----------firewall_rules.compare----------")
 # p(ibmsecurity.qradar.firewall_rules.compare(qradar_server, serverID, qradar_server, serverID))

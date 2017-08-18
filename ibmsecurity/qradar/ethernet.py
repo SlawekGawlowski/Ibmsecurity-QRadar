@@ -4,7 +4,7 @@ import ibmsecurity.utilities.tools
 logger = logging.getLogger(__name__)
 
 
-def get(qradarAppliance, server_ID, check_mode=False, force=False):
+def get_all(qradarAppliance, server_ID, check_mode=False, force=False):
     """
     Retrieves a list of ethernet interfaces based on the supplied server ID
     """
@@ -46,7 +46,7 @@ def _check(qradarAppliance, server_ID, device_name, role, ipversion, ip, mask, i
     """
     Checks that the supplied ethernet interface on the supplied server ID does not already have the supplied configuration
     """
-    config = get(qradarAppliance, server_ID)['data']
+    config = get_all(qradarAppliance, server_ID)['data']
 
     for interface in config:
         if interface['device_name'] == device_name:
@@ -67,7 +67,7 @@ def compare(qradarAppliance1, serverID1, qradarAppliance2, serverID2):
     """
     Compare ethernet interfaces on two QRadar hosts
     """
-    ret_obj1 = get(qradarAppliance1, serverID1)
-    ret_obj2 = get(qradarAppliance2, serverID2)
+    ret_obj1 = get_all(qradarAppliance1, serverID1)
+    ret_obj2 = get_all(qradarAppliance2, serverID2)
 
     return ibmsecurity.utilities.tools.json_compare(ret_obj1, ret_obj2, deleted_keys=[])
