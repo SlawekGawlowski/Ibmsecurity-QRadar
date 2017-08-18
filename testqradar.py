@@ -84,32 +84,43 @@ qradar_server = QRadarAppliance(hostname="192.168.42.100", user=u, lmi_port=443)
 
 # Retrieve the details of all hosts in the deployment
 server_details = ibmsecurity.qradar.servers.get_all(qradarAppliance=qradar_server)
+serverID = server_details['data'][0]['server_id']
 print("----------servers.get_all----------")
 p(server_details)
+
+print("----------servers.get----------")
+p(ibmsecurity.qradar.servers.get(qradarAppliance=qradar_server, server_id=serverID))
+
+# Update the first host in the deployment
+print("----------servers.set----------")
+p(ibmsecurity.qradar.servers.set(qradarAppliance=qradar_server,
+                                 server_id=serverID,
+                                 email_server_address="localhost"))
+
+print("----------servers.get----------")
+p(ibmsecurity.qradar.servers.get(qradarAppliance=qradar_server, server_id=serverID))
 
 # print("----------servers.compare----------")
 # p(ibmsecurity.qradar.servers.compare(qradar_server, qradar_server))
 
-serverID = server_details['data'][0]['server_id']
-
-# Check ethernet interfaces on the first host in the deployment
-print("----------ethernet.get_all----------")
-p(ibmsecurity.qradar.ethernet.get_all(qradarAppliance=qradar_server, server_ID=serverID))
-
-# Update an ethernet interfaces on the first host in the deployment
-print("----------ethernet.set----------")
-p(ibmsecurity.qradar.ethernet.set(qradarAppliance=qradar_server,
-                                  server_ID=serverID,
-                                  device_name="eth1",
-                                  role="regular",
-                                  ipversion="ipv4",
-                                  ip="192.168.125.101",
-                                  mask="255.255.255.0",
-                                  is_auto_ip=False,
-                                  is_moving_config_with_active_ha=True))
-
-print("----------ethernet.get_all----------")
-p(ibmsecurity.qradar.ethernet.get_all(qradarAppliance=qradar_server, server_ID=serverID))
+# # Check ethernet interfaces on the first host in the deployment
+# print("----------ethernet.get_all----------")
+# p(ibmsecurity.qradar.ethernet.get_all(qradarAppliance=qradar_server, server_ID=serverID))
+#
+# # Update an ethernet interface on the first host in the deployment
+# print("----------ethernet.set----------")
+# p(ibmsecurity.qradar.ethernet.set(qradarAppliance=qradar_server,
+#                                   server_ID=serverID,
+#                                   device_name="eth1",
+#                                   role="regular",
+#                                   ipversion="ipv4",
+#                                   ip="192.168.125.101",
+#                                   mask="255.255.255.0",
+#                                   is_auto_ip=False,
+#                                   is_moving_config_with_active_ha=True))
+#
+# print("----------ethernet.get_all----------")
+# p(ibmsecurity.qradar.ethernet.get_all(qradarAppliance=qradar_server, server_ID=serverID))
 
 # print("----------ethernet.compare----------")
 # p(ibmsecurity.qradar.ethernet.compare(qradar_server, serverID, qradar_server, serverID))
